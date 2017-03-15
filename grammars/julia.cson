@@ -13,7 +13,7 @@ fileTypes: [
   "jl"
 ]
 firstLineMatch: "^#!.*\\bjulia\\s*$"
-foldingStartMarker: "^\\s*(?:if|while|for|begin|function|macro|module|baremodule|type|immutable|try|let)\\b(?!.*\\bend\\b).*$"
+foldingStartMarker: "^\\s*(?:if|while|for|begin|function|macro|module|baremodule|type|immutable|struct|try|let)\\b(?!.*\\bend\\b).*$"
 foldingStopMarker: "^\\s*(?:end)\\b.*$"
 name: "Julia"
 patterns: [
@@ -130,7 +130,7 @@ repository:
             name: "entity.name.function.julia"
           "2":
             name: "support.type.julia"
-        match: "([[:alpha:]_][[:word:]\u207A-\u209C!\u2032]*)({(?:[^{}]|{(?:[^{}]|{[^{}]*})*})*})?\\((?=.*\\)\\s*=(?![=>]))"
+        match: "([[:alpha:]_][[:word:]\u207A-\u209C!\u2032]*)({(?:[^{}]|{(?:[^{}]|{[^{}]*})*})*})?\\((?=.*\\)\\s*(?:where.*)?\\s*=(?![=>]))"
         comment: """
         first group is function name
         Second group is type parameters (e.g. {T<:Number, S})
@@ -160,7 +160,7 @@ repository:
   keyword:
     patterns: [
       {
-        match: "\\b(?<![:_])(?:function|@generated|type|immutable|macro|quote|abstract|bitstype|typealias|module|baremodule|new)\\b"
+        match: "\\b(?<![:_])(?:function|@generated|type|immutable|struct|mutable|where|macro|quote|abstract|bitstype|typealias|module|baremodule|new)\\b"
         name: "keyword.other.julia"
       }
       {
@@ -231,6 +231,10 @@ repository:
       }
       {
         match: "(?:\\s*::\\s*(?:(?:Union)?\\([^)]*\\)|[[:alpha:]_][[:word:]\u207A-\u209C!\u2032\\.]*(?:{(?:[^{}]|{(?:[^{}]|{[^{}]*})*})*})?))(?:\\.\\.\\.)?"
+        name: "support.type.julia"
+      }
+      {
+        match: "(?<=where )(({(?:[^{}]|{(?:[^{}]|{[^{}]*})*})*})|\\S*)"
         name: "support.type.julia"
       }
       {
